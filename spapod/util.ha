@@ -1,5 +1,6 @@
 use fmt;
 
+// Prints out a buffer as u32 values for debugging purposes.
 export fn print_buffer(
 	buffer: *[]u32,
 	builder: *builder,

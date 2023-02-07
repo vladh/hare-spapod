@@ -12,7 +12,7 @@ export type builder = struct {
 	added_container_bytelen: size,
 };
 
-export fn add_nolen(
+fn add_nolen(
 	buffer: *[]u32,
 	builder: *builder,
 	value: u32,
@@ -22,7 +22,7 @@ export fn add_nolen(
 	builder.idx += 1;
 };
 
-export fn add_clen(
+fn add_clen(
 	buffer: *[]u32,
 	builder: *builder,
 	value: u32,
@@ -31,7 +31,7 @@ export fn add_clen(
 	builder.added_container_bytelen += U32_SIZE;
 };
 
-export fn add(
+fn add(
 	buffer: *[]u32,
 	builder: *builder,
 	value: u32,
@@ -40,7 +40,7 @@ export fn add(
 	builder.added_bytelen += U32_SIZE;
 };
 
-export fn add_padding_if_needed(
+fn add_padding_if_needed(
 	buffer: *[]u32,
 	builder: *builder,
 ) void = {
@@ -49,7 +49,7 @@ export fn add_padding_if_needed(
 	};
 };
 
-export fn record_bytelen(
+fn record_bytelen(
 	buffer: *[]u32,
 	builder: *builder,
 ) void = {
@@ -59,6 +59,7 @@ export fn record_bytelen(
 	builder.added_bytelen = 0;
 };
 
+// Adds a new struct container.
 export fn push_struct(
 	buffer: *[]u32,
 	builder: *builder,
@@ -71,6 +72,7 @@ export fn push_struct(
 	add(buffer, builder, spa_type::Struct); // type
 };
 
+// Adds a new object container.
 export fn push_object(
 	buffer: *[]u32,
 	builder: *builder,
@@ -88,6 +90,7 @@ export fn push_object(
 	record_bytelen(buffer, builder);
 };
 
+// Adds a new array container.
 export fn push_array(
 	buffer: *[]u32,
 	builder: *builder,
@@ -105,6 +108,7 @@ export fn push_array(
 	record_bytelen(buffer, builder);
 };
 
+// Finalizes the most recently added container.
 export fn pop(
 	buffer: *[]u32,
 	builder: *builder,
@@ -122,6 +126,7 @@ export fn pop(
 	builder.added_container_bytelen = 0;
 };
 
+// Adds an object property.
 export fn add_prop(
 	buffer: *[]u32,
 	builder: *builder,
@@ -133,6 +138,7 @@ export fn add_prop(
 	record_bytelen(buffer, builder);
 };
 
+// Adds an integer value.
 export fn add_int(
 	buffer: *[]u32,
 	builder: *builder,
@@ -146,6 +152,7 @@ export fn add_int(
 	record_bytelen(buffer, builder);
 };
 
+// Adds an ID value.
 export fn add_id(
 	buffer: *[]u32,
 	builder: *builder,
@@ -159,6 +166,8 @@ export fn add_id(
 	record_bytelen(buffer, builder);
 };
 
+// Adds an array value. Its size must be equal to the array element size
+// declared when pushing the array.
 export fn add_array_val(
 	buffer: *[]u32,
 	builder: *builder,
