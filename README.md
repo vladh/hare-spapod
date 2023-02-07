@@ -9,3 +9,7 @@ The implementation currently has basic functionality but is easy to extend.
 ```
 git subtree -P vendor/hare-spapod/ add https://git.sr.ht/~vladh/hare-spapod main
 ```
+
+## Tests
+
+There is a small test you can run with `make run`.
